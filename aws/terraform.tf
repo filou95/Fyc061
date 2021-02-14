@@ -1,7 +1,7 @@
 terraform {
     backend "s3" {
         encrypt = true
-        bucket  = "projet-annuel"
+        bucket  = "fyc"
         region  = "eu-west-3"
         key     = "projet.tfstate"
     }
