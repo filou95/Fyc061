@@ -7,7 +7,7 @@ provider "aws" {
 ###
 # VPC.
 ###
-resource "aws_vpc" "projet_annuel" {
+resource "aws_vpc" "fyc" {
   cidr_block = "10.0.0.0/16"
 }
 
@@ -22,7 +22,7 @@ resource "aws_eip" "eip" {
 # Subnets.
 ###
 resource "aws_subnet" "public1" {
-    vpc_id                  = aws_vpc.projet_annuel.id
+    vpc_id                  = aws_vpc.fyc.id
     cidr_block              = "10.0.0.0/24"
     availability_zone       = "eu-west-3a"
     map_public_ip_on_launch = true
@@ -30,7 +30,7 @@ resource "aws_subnet" "public1" {
 }
 
 resource "aws_subnet" "public2" {
-    vpc_id            = aws_vpc.projet_annuel.id
+    vpc_id            = aws_vpc.fyc.id
     cidr_block        = "10.0.1.0/24"
     availability_zone = "eu-west-3b"
     map_public_ip_on_launch = true
@@ -38,14 +38,14 @@ resource "aws_subnet" "public2" {
 }
 
 resource "aws_subnet" "private1" {
-    vpc_id            = aws_vpc.projet_annuel.id
+    vpc_id            = aws_vpc.fyc.id
     cidr_block        = "10.0.2.0/24"
     availability_zone = "eu-west-3a"
     tags              = {Name = "Private_1"}
 }
 
 resource "aws_subnet" "private2" {
-    vpc_id            = aws_vpc.projet_annuel.id
+    vpc_id            = aws_vpc.fyc.id
     cidr_block        = "10.0.3.0/24"
     availability_zone = "eu-west-3b"
     tags              = {Name = "Private_2"}
@@ -55,7 +55,7 @@ resource "aws_subnet" "private2" {
 # Internet gateway.
 ###
 resource "aws_internet_gateway" "igw" {
-    vpc_id = aws_vpc.projet_annuel.id
+    vpc_id = aws_vpc.fyc.id
     tags   = {Name = "IGW"}
 }
 
@@ -72,7 +72,7 @@ resource "aws_nat_gateway" "ngw" {
 # Private route table.
 ###
 resource "aws_route_table" "private_route_table" {
-    vpc_id = aws_vpc.projet_annuel.id
+    vpc_id = aws_vpc.fyc.id
     tags   = {Name = "Private_route"}
 }
 
@@ -96,7 +96,7 @@ resource "aws_route_table_association" "private_association2" {
 # Public route table.
 ###
 resource "aws_route_table" "public_route_table" {
-    vpc_id = aws_vpc.projet_annuel.id
+    vpc_id = aws_vpc.fyc.id
     tags   = {Name = "Public_route"}
 }
 
