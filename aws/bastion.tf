@@ -3,7 +3,7 @@
 ###
 resource "aws_security_group" "sg_bastion" {
     name        = "sg_ec2-bastion"
-    vpc_id      = aws_vpc.projet_annuel.id
+    vpc_id      = aws_vpc.fyc.id
     description = "Managed by Terraform"
 
     ingress {
