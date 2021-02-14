@@ -1,0 +1,55 @@
+image:
+  name: hashicorp/terraform:latest
+  entrypoint:
+    - /usr/bin/env
+    - "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+
+before_script:
+  - terraform init
+
+cache:
+  key: terraform
+  paths:
+    - .terraform
+
+stages:
+  - validate
+  - plan
+  - apply
+  - destroy
+
+validate:
+  stage: validate
+  script:
+    - terraform validate
+  only:
+    - branches
+
+plan:
+  stage: plan
+  script:
+    - terraform plan --out plan
+  artifacts:
+    paths:
+      - plan
+  only:
+    - master
+
+apply:
+  stage: apply
+  script:
+    - terraform apply --auto-approve plan
+    - terraform state list
+  when: manual
+  allow_failure: false
+  only:
+    - master
+
+destroy:
+  stage: destroy
+  script:
+    - terraform destroy --auto-approve
+  when: manual
+  only:
+    - master
+
